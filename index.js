@@ -17,15 +17,13 @@ app.get('/create', function(req, res) {
   res.sendFile('/create.html', { root: '.' });
 });
 app.post('/create', function (req, res, next) {
-  client.connect(err => {
+  
     const customers = client.db("crmdb").collection("customers");
 
-    let customer = {name: req.body.name, address: req.body.address, telephone: req.body.telephone, note: req.body.note};
-    customers.insertOne(customer, function (err, res) {
-      if (err) throw err;
-      console.log("1 customer inserted");
-    });
-  })
+    let customer = {name: req.body.name, address: req.body.address,     telephone: req.body.telephone, note: req.body.note};
+    customers.insertOne(customer);
+    
+  
   res.send('Customer created');
 })
 app.set('port', process.env.PORT || 5000);
@@ -73,5 +71,5 @@ const MongoClient = require('mongodb').MongoClient;
 const mongo_username = process.env['new123']
 const mongo_password = process.env['new123']
 
-const uri = `mongodb+srv://${mongo_username}:${mongo_password}@cluster0-zrtwi.gcp.mongodb.net/crmdb?retryWrites=true&w=majority`;
+const uri = `mongodb+srv://new123:new123@cluster0.pz28f7c.mongodb.net/?retryWrites=true&w=majority`;
 const client = new MongoClient(uri, { useNewUrlParser: true });
