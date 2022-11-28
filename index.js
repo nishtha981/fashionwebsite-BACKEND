@@ -16,12 +16,15 @@ app.get('/', function(req, res) {
 app.get('/create', function(req, res) {
   res.sendFile('/create.html', { root: '.' });
 });
-app.post('/create', function (req, res, next) {
+app.post('/create',  function (req, res, next) {
   
-    const customers = client.db("crmdb").collection("customers");
+    const customers =   client.db("crmdb").collection("customers");
+  console.log("connect")
 
-    let customer = {name: req.body.name, address: req.body.address,     telephone: req.body.telephone, note: req.body.note};
-    customers.insertOne(customer);
+    let customer = {name: req.body.name,  email: req.body.email};
+        customers.insertOne(customer);
+  console.log(req.body.name )
+   console.log(req.body.email)
     
   
   res.send('Customer created');
@@ -36,7 +39,7 @@ app.get('/get', function (req, res) {
 
 app.get('/get-client', function (req, res) {
     client.connect(err => {
-        client.db("crmdb").collection("customers").findOne({name: req.query.name}, function(err, result) {
+           client.db("crmdb").collection("customers").findOne({name: req.query.name}, function(err, result) {
           if (err) throw err;
           res.render('update', {oldname: result.name, oldaddress: result.address, oldtelephone: result.telephone, oldnote: result.note, name: result.name, address: result.address, telephone: result.telephone, note: result.note});
         });
@@ -68,8 +71,9 @@ app.post('/delete', function(req, res) {
 })
 
 const MongoClient = require('mongodb').MongoClient;
-const mongo_username = process.env['new123']
-const mongo_password = process.env['new123']
+const mongo_username = process.env['new1234']
+const mongo_password = process.env['new1234']
 
-const uri = `mongodb+srv://new123:new123@cluster0.pz28f7c.mongodb.net/?retryWrites=true&w=majority`;
-const client = new MongoClient(uri, { useNewUrlParser: true });
+const uri = `mongodb+srv://new1234:new1234@cluster0.tenmiwy.mongodb.net/?retryWrites=true&w=majority`;
+
+const client =  new MongoClient(uri, { useNewUrlParser: true });
